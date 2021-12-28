@@ -1,3 +1,3 @@
-export * from "./connection";
-export * from "./interfaces";
-export * from "./methods";
+export * from "./nats/connection";
+export * from "./nats/interfaces";
+export * from "./nats/methods";
