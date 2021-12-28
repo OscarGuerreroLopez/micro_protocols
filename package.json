@@ -1,0 +1,56 @@
+{
+  "name": "micro_protocols",
+  "version": "0.0.1",
+  "description": "A simple protocols connector",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "readmeFilename": "README.md",
+  "files": [
+    "dist/**/*",
+    "src/**/*",
+    "*.md"
+  ],
+  "homepage": "https://github.com/OscarGuerreroLopez/micro_protocols",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OscarGuerreroLopez/micro_protocols"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon",
+    "build": "rimraf ./dist && tsc",
+    "start": "npm run build && node dist/index.js",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
+    "prepare": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [],
+  "author": "Oscar Guerrero",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "nodemon": "^2.0.12",
+    "onchange": "^7.1.0",
+    "prettier": "^2.3.2",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.2.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "nats": "^2.4.0"
+  }
+}
