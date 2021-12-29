@@ -41,8 +41,10 @@ export const CreateChannel = async (
       });
 
       channel.on("close", () => {
-        logger("info", "Raabit channel closed");
+        logger("info", "Rabbit channel closed");
       });
+
+      logger("info", `Rabbit channel created on ${name} queue: ${queue}`);
       channelInstance = channel;
 
       resolve();
@@ -58,7 +60,7 @@ export const Methods = async (
   queue: string
 ): Promise<{
   publish: (message: IObjectLiteral) => boolean;
-  receive: (queue: string, handler: Function) => void;
+  receive: (handler: Function) => void;
 }> => {
   if (!channelInstance) {
     await CreateChannel(name, server, logger, errorHandler, queue);
@@ -71,7 +73,7 @@ export const Methods = async (
     );
   };
 
-  const receive = (queue: string, handler: Function) => {
+  const receive = (handler: Function) => {
     channelInstance.consume(queue, (msg) => {
       if (msg) {
         channelInstance.ack(msg);

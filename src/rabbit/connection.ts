@@ -28,7 +28,7 @@ export const RabbitConnection = ({
         logger("info", "Rabbit connection closed");
       });
 
-      logger("info", "Rabbit connection created");
+      logger("info", `Rabbit connection created ${name}`);
 
       resolve(connection);
     });
