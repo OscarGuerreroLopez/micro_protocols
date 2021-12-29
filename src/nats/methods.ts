@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { createInbox, JSONCodec, Subscription } from "nats";
 import { NatsConnect } from "./connection";
-import { Logger, Protocols } from "./interfaces";
+import { Protocols } from "./interfaces";
+import { Logger } from "../common";
 
 const jc = JSONCodec();
 const inbox = createInbox();

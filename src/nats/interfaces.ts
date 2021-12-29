@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { NatsConnection, Subscription } from "nats";
-export type LogType = "info" | "warn" | "error";
-
-export type Logger = (logger: LogType, message: string, data?: unknown) => void;
+import { Logger } from "../common";
 
 export interface NatsConOptions {
   servers: string[];
