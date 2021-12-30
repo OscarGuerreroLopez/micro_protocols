@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { Channel } from "amqplib/callback_api";
+import { CreateChannel, RabbitConnection } from ".";
+import { Logger } from "../common";
 
-export const Methods = async (
+const MethodsImp = async (
   channel: Channel,
   queue: string
 ): Promise<{
@@ -22,6 +24,37 @@ export const Methods = async (
       return null;
     });
   };
+
+  return { publish, receive };
+};
+
+export const Methods = async (
+  name: string,
+  logger: Logger,
+  server: string,
+  errorHandler: Function,
+  queue: string,
+  channelName: string
+): Promise<{
+  publish: (message: IObjectLiteral) => boolean;
+  receive: (handler: Function) => void;
+}> => {
+  const connection = await RabbitConnection({
+    name,
+    logger,
+    server,
+    errorHandler
+  }).getInstance();
+
+  const channel = await CreateChannel(
+    connection,
+    logger,
+    errorHandler,
+    queue,
+    channelName
+  );
+
+  const { publish, receive } = await MethodsImp(channel, queue);
 
   return { publish, receive };
 };

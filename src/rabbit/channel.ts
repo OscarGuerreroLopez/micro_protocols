@@ -16,7 +16,7 @@ export const CreateChannel = async (
     const channel = channelInstances.get(channelName);
 
     if (channel) {
-      logger("info", `Reusing Rabbit channel queue: ${queue}`);
+      logger("info", `Reusing Rabbit channel ${channelName} queue: ${queue}`);
       return resolve(channel);
     }
 
@@ -41,7 +41,7 @@ export const CreateChannel = async (
         errorHandler("Channel closed");
       });
 
-      logger("info", `Rabbit channel created  queue: ${queue}`);
+      logger("info", `Rabbit channel ${channelName} created  queue: ${queue}`);
       channelInstances.set(channelName, channel);
 
       return resolve(channel);
