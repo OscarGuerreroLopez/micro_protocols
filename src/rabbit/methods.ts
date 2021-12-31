@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import { Channel } from "amqplib/callback_api";
+import { Channel } from "amqplib";
 import { CreateChannel, RabbitConnection } from ".";
 import { Logger } from "../common";
 
