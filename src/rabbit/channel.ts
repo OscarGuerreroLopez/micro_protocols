@@ -2,7 +2,6 @@
 import { Channel, Connection } from "amqplib";
 import { Logger } from "../common";
 
-// let channelInstance: Channel;
 const channelInstances: Map<string, Readonly<Channel>> = new Map();
 
 export const CreateChannel = async (
@@ -28,11 +27,13 @@ export const CreateChannel = async (
   channel.prefetch(1);
 
   channel.on("error", (error) => {
+    channelInstances.delete(channelName);
     logger("error", "Rabbit channel error", error);
   });
 
   channel.on("close", () => {
-    logger("info", "Rabbit channel closed");
+    logger("info", "Rabbit channel closed", { name: channelName });
+    channelInstances.delete(channelName);
     errorHandler("Channel closed");
   });
 

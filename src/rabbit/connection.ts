@@ -2,6 +2,7 @@ import amqp, { Connection } from "amqplib";
 import { RabbitConnectionParams } from "./interfaces";
 
 let connectionInstance: Connection;
+let connectionActived = false;
 
 export const RabbitConnection = ({
   name,
@@ -22,21 +23,24 @@ export const RabbitConnection = ({
 
     connection.on("error", (error) => {
       logger("error", "Rabbit connection error", error);
+      connectionActived = false;
       errorHandler(error);
     });
 
     connection.on("close", () => {
-      logger("info", "Rabbit connection closed");
+      logger("info", "Rabbit connection closed", { name });
+      connectionActived = false;
       errorHandler("Connection closed");
     });
 
     logger("info", `Rabbit connection created ${name}`);
+    connectionActived = true;
     return connection;
   };
 
   return {
     getInstance: async (): Promise<Connection> => {
-      if (!connectionInstance) {
+      if (!connectionActived || !connectionInstance) {
         connectionInstance = await createInstance();
       }
       return connectionInstance;
