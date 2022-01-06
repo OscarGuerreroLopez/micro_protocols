@@ -7,7 +7,7 @@ import { Logger } from "../common";
 const jc = JSONCodec();
 const inbox = createInbox();
 
-export const Methods = async (
+export const NatsMethods = async (
   hosts: string,
   token: string,
   logger: Logger

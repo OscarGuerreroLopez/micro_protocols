@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { Channel } from "amqplib";
-import { CreateChannel, RabbitConnection } from ".";
+import { RabbitConnection } from "./connection";
+import { CreateChannel } from "./channel";
 import { Logger } from "../common";
 
 const MethodsImp = async (
@@ -28,7 +29,7 @@ const MethodsImp = async (
   return { publish, receive };
 };
 
-export const Methods = async (
+export const RabbitMethods = async (
   name: string,
   logger: Logger,
   server: string,
