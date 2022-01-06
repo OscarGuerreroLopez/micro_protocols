@@ -7,14 +7,13 @@ const channelInstances: Map<string, Readonly<Channel>> = new Map();
 export const CreateChannel = async (
   connection: Connection,
   logger: Logger,
-  errorHandler: Function,
+  errorHandler: (data: IObjectLiteral) => void,
   queue: string,
   channelName: string
 ): Promise<Channel> => {
   const channelInstance = channelInstances.get(channelName);
 
   if (channelInstance) {
-    logger("info", `Reusing Rabbit channel ${channelName} queue: ${queue}`);
     return channelInstance;
   }
 
@@ -32,9 +31,9 @@ export const CreateChannel = async (
   });
 
   channel.on("close", () => {
-    logger("info", "Rabbit channel closed", { name: channelName });
     channelInstances.delete(channelName);
-    errorHandler("Channel closed");
+    logger("info", "Rabbit channel closed", { name: channelName });
+    errorHandler({ message: "Channel closed", channelName });
   });
 
   logger("info", `Rabbit channel ${channelName} created  queue: ${queue}`);

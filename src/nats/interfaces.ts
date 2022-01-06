@@ -9,7 +9,7 @@ export interface NatsConOptions {
   logger: Logger;
 }
 
-export interface Protocols {
+export interface NatsProtocols {
   publish: (route: string, data: unknown) => Promise<void>;
   subscribe: (subject: string, handler: Function) => Promise<Subscription>;
   request: <T, V>(subject: string, data: T) => Promise<V>;

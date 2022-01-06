@@ -30,7 +30,7 @@ export const RabbitConnection = ({
     connection.on("close", () => {
       logger("info", "Rabbit connection closed", { name });
       connectionActived = false;
-      errorHandler("Connection closed");
+      errorHandler({ message: "Connection closed", name });
     });
 
     logger("info", `Rabbit connection created ${name}`);

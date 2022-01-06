@@ -3,15 +3,17 @@
 import { Channel } from "amqplib";
 import { RabbitConnection } from "./connection";
 import { CreateChannel } from "./channel";
-import { Logger } from "../common";
+
+import {
+  RabbitImplementation,
+  RabbitProtocols,
+  RabbitParams
+} from "./interfaces";
 
 const MethodsImp = async (
   channel: Channel,
   queue: string
-): Promise<{
-  publish: (message: IObjectLiteral) => boolean;
-  receive: (handler: Function) => void;
-}> => {
+): Promise<RabbitImplementation> => {
   const publish = (message: IObjectLiteral): boolean => {
     return channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
   };
@@ -29,17 +31,14 @@ const MethodsImp = async (
   return { publish, receive };
 };
 
-export const RabbitMethods = async (
-  name: string,
-  logger: Logger,
-  server: string,
-  errorHandler: Function,
-  queue: string,
-  channelName: string
-): Promise<{
-  publish: (message: IObjectLiteral) => boolean;
-  receive: (handler: Function) => void;
-}> => {
+export const RabbitMethods = async ({
+  name,
+  logger,
+  server,
+  errorHandler,
+  queue,
+  channelName
+}: RabbitParams): Promise<RabbitProtocols> => {
   const connection = await RabbitConnection({
     name,
     logger,

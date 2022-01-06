@@ -1,14 +1,14 @@
-# Nats connection
+# Micro connections
 
-This is just a library to handle the nats connection for microservices
+This is just a library to handle the connections for microservices
 
 ## Installation
 
 ```bash
-npm install oscar_nats
+npm install micro_protocols
 ```
 
-## Usage
+## NATS Usage
 
 ```
 import { Methods, LogType } from "oscar_nats";

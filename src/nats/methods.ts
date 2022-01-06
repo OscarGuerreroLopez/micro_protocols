@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { createInbox, JSONCodec, Subscription } from "nats";
 import { NatsConnect } from "./connection";
-import { Protocols } from "./interfaces";
+import { NatsProtocols } from "./interfaces";
 import { Logger } from "../common";
 
 const jc = JSONCodec();
@@ -11,7 +11,7 @@ export const NatsMethods = async (
   hosts: string,
   token: string,
   logger: Logger
-): Promise<Protocols> => {
+): Promise<NatsProtocols> => {
   const servers = hosts.split(",");
 
   const connection = await NatsConnect({
@@ -71,7 +71,7 @@ export const NatsMethods = async (
   };
 
   await subscribe(inbox, (data: unknown) => {
-    logger("info", "@@@inbox", data);
+    logger("info", "publish message received", data);
   });
 
   return {
