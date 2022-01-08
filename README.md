@@ -11,7 +11,7 @@ npm install micro_protocols
 ## NATS Usage
 
 ```
-import { Methods, LogType } from "oscar_nats";
+import { NatsMethods, LogType } from "micro_protocols";
 
 // you can inject any logger as longs as it meets the LogType
 const logger = (logger: LogType, message: string, data?: unknown) => {
@@ -28,11 +28,35 @@ const logger = (logger: LogType, message: string, data?: unknown) => {
   }
 };
 
-export const BusMethods = Methods(
-  SERVERS,
-  TOKEN,
+export const BusMethods = NatsMethods(
+  EnvVars.NATS_HOSTS,
+  EnvVars.NATS_TOKEN,
   logger
 );
+
+
+```
+
+```
+interface IResponse {
+  message: string;
+}
+
+interface IRequest {
+  message: string;
+}
+
+const { publish, request } = await BusMethods;
+
+publish("employee", {
+  fname: "Oscar",
+  lname: "Lopez"
+});
+
+const result = await request<IRequest, IResponse>("hello", {
+  message: "Hello there"
+});
+
 ```
 
 ## Contributing
