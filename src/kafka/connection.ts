@@ -29,8 +29,6 @@ export const KafkaConnection = (
   return {
     getInstance: () => {
       if (!instance) {
-        console.log("@@@111 Creating Connection");
-
         instance = createInstance();
       }
       return instance;
