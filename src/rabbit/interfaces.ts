@@ -1,16 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { Logger } from "../common";
+import { LoggerErrorHandlers } from "../common";
 
 export interface RabbitConnectionParams {
   name: string;
-  logger: Logger;
   server: string;
-  errorHandler: (data: IObjectLiteral) => void;
-}
-
-export interface RabbitImplementation {
-  publish: (message: IObjectLiteral) => boolean;
-  receive: (handler: Function) => void;
+  loggerErrorHandlers: LoggerErrorHandlers;
 }
 
 export interface RabbitProtocols {
@@ -19,10 +13,9 @@ export interface RabbitProtocols {
 }
 
 export interface RabbitParams {
-  name: string;
-  logger: Logger;
-  server: string;
-  errorHandler: (data: IObjectLiteral) => void;
+  connectionName: string;
+  rabbitServer: string;
+  loggerErrorHandlers: LoggerErrorHandlers;
   queue: string;
   channelName: string;
 }

@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Channel, Connection } from "amqplib";
-import { Logger } from "../common";
+import { LoggerErrorHandlers } from "../common";
 
 const channelInstances: Map<string, Readonly<Channel>> = new Map();
 
 export const CreateChannel = async (
   connection: Connection,
-  logger: Logger,
-  errorHandler: (data: IObjectLiteral) => void,
   queue: string,
-  channelName: string
+  channelName: string,
+  loggerErrorHandlers: LoggerErrorHandlers
 ): Promise<Channel> => {
+  const { logger, errorHandler } = loggerErrorHandlers;
+
   const channelInstance = channelInstances.get(channelName);
 
   if (channelInstance) {

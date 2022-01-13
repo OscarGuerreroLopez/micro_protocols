@@ -6,12 +6,13 @@ let connectionActived = false;
 
 export const RabbitConnection = ({
   name,
-  logger,
   server,
-  errorHandler
+  loggerErrorHandlers
 }: RabbitConnectionParams): {
   getInstance: () => Promise<Connection>;
 } => {
+  const { logger, errorHandler } = loggerErrorHandlers;
+
   const createInstance = async (): Promise<Connection> => {
     const options = {
       clientProperties: {
@@ -24,13 +25,12 @@ export const RabbitConnection = ({
     connection.on("error", (error) => {
       logger("error", "Rabbit connection error", error);
       connectionActived = false;
-      errorHandler(error);
     });
 
     connection.on("close", () => {
       logger("info", "Rabbit connection closed", { name });
-      connectionActived = false;
       errorHandler({ message: "Connection closed", name });
+      connectionActived = false;
     });
 
     logger("info", `Rabbit connection created ${name}`);
